@@ -1,0 +1,30 @@
+- name: Install MacOs sequilla 15.4
+  hosts: temp
+ # vars:
+ #   version: 2023.2.20f1
+
+
+  tasks:
+
+  - name: Copy MacOs Sequilla 15.4 Full Installer
+    ansible.builtin.copy:
+      src: /Users/admin/Downloads/InstallAssistant.pkg 
+      dest: /tmp/InstallAssistant.pkg
+    when:
+    - ansible_facts['distribution_major_version'] < "15"
+
+  - name: Install installer
+    ansible.builtin.shell:
+      cmd: installer -pkg /tmp/InstallAssistant.pkg -target /
+    when:
+    - ansible_facts['distribution_major_version'] < "15"
+
+  - name: Upgrade
+    ansible.builtin.shell:      
+      cmd: Echo "Ground.Rabb1t.Al1c3" | /Applications/Install\ macOS\ Sequoia.app/Contents/Resources/startosinstall --agreetolicense --forcequitapps --user admin --stdinpass
+    async: 60000
+    poll: 0
+    become: yes
+    when:
+    - ansible_facts['distribution_major_version'] < "15"
+

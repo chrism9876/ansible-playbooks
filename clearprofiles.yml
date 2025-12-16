@@ -1,0 +1,31 @@
+- name: Clear Profiles
+  hosts: pa511
+
+
+
+  tasks:
+
+  - name: Copy
+    ansible.builtin.copy:
+      src: /Users/admin/playbooks/clearprofiles.ps1
+      dest: /tmp/clearprofiles.ps1
+      force: true
+      follow: true
+      owner: root
+      group: wheel
+      mode : u=rwx,g=rwx,o=r
+    become: yes
+
+
+
+
+  - name: Clear Profiles
+    ansible.builtin.command: /usr/local/bin/pwsh -f /tmp/clearprofiles.ps1
+#    args:
+#      executable: /usr/local/bin/pwsh
+#    async: 60000
+#    poll: 0
+    become: yes
+#    when: ansible_facts['distribution_version'] < "15.5"
+
+

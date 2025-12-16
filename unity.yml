@@ -1,0 +1,30 @@
+- name: Install Unity
+  hosts: l-cb346
+  vars:
+    version: 2023.2.20f1
+
+
+  tasks:
+
+  - name: Install Unity
+    ansible.windows.win_package:
+      path: https://download.unity3d.com/download_unity/0e25a174756c/Windows64EditorInstaller/UnitySetup64-2023.2.20f1.exe
+      arguments: -UI=reduced /S /D=c:\Program Files\Unity\Hub\Editor\2023.2.20f1
+
+  - name: Install Unity Android Support
+    ansible.windows.win_package:
+      path: https://download.unity3d.com/download_unity/0e25a174756c/TargetSupportInstaller/UnitySetup-Android-Support-for-Editor-2023.2.20f1.exe
+      arguments: /S /D=c:\Program Files\Unity\Hub\Editor\2023.2.20f1
+
+  - name: Install Unity WebGL support
+    ansible.windows.win_package:
+      path: https://download.unity3d.com/download_unity/0e25a174756c/TargetSupportInstaller/UnitySetup-WebGL-Support-for-Editor-2023.2.20f1.exe
+      arguments: /S /D=c:\Program Files\Unity\Hub\Editor\2023.2.20f1
+
+  - name: Install Unity Windows Support
+    ansible.windows.win_package:
+      path: https://download.unity3d.com/download_unity/0e25a174756c/TargetSupportInstaller/UnitySetup-Windows-IL2CPP-Support-for-Editor-2023.2.20f1.exe
+      arguments: /S /D=c:\Program Files\Unity\Hub\Editor\2023.2.20f1
+
+
+

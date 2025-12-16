@@ -1,0 +1,28 @@
+- name: Update to MacOs sequilla 15.4
+  hosts: mac15
+ # vars:
+ #   version: 2023.2.20f1
+
+
+  tasks:
+
+#  - name: Download update
+#    ansible.builtin.shell:
+#      cmd: /usr/sbin/softwareupdate -d "macOS Sequoia 15.3.1-24D70"
+
+
+  - name: Install update
+    ansible.builtin.shell: |      
+      log_file /tmp/uplog.log;
+      set timeout 99999999
+      spawn /usr/sbin/softwareupdate -i "macOS Sequoia 15.5-24F74" -R --force
+      expect "Password:"
+      send -- "Ground.Rabb1t.Al1c3\r"
+      expect eof
+    args:
+      executable: /usr/bin/expect
+#    async: 60000
+#    poll: 0
+    become: yes
+    when: ansible_facts['distribution_version'] < "15.5"
+
