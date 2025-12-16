@@ -1,5 +1,8 @@
 - name: Install MacOs sequilla 15.4
   hosts: temp
+  vars_prompt:
+    - name: password
+      prompt: What is the password?
  # vars:
  #   version: 2023.2.20f1
 
@@ -21,7 +24,7 @@
 
   - name: Upgrade
     ansible.builtin.shell:      
-      cmd: Echo "Ground.Rabb1t.Al1c3" | /Applications/Install\ macOS\ Sequoia.app/Contents/Resources/startosinstall --agreetolicense --forcequitapps --user admin --stdinpass
+      cmd: Echo "{{ password }}" | /Applications/Install\ macOS\ Sequoia.app/Contents/Resources/startosinstall --agreetolicense --forcequitapps --user admin --stdinpass
     async: 60000
     poll: 0
     become: yes
