@@ -1,4 +1,4 @@
-- name: Update to MacOs sequilla 15.4
+- name: Update to MacOs sequilla 15.7.3
   hosts: mac15
   vars_prompt:
     - name: password
@@ -18,7 +18,7 @@
     ansible.builtin.shell: |      
       log_file /tmp/uplog.log;
       set timeout 99999999
-      spawn /usr/sbin/softwareupdate -i "macOS Sequoia 15.5-24F74" -R --force
+      spawn /usr/sbin/softwareupdate -i "macOS Sequoia 15.7.3-24G419" -R --force
       expect "Password:"
       send -- "{{ password }}\r"
       expect eof
