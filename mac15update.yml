@@ -27,5 +27,6 @@
 #    async: 60000
 #    poll: 0
     become: yes
-    when: ansible_facts['distribution_version'] < "15.5"
-
+    when: 
+      - ansible_facts['distribution_version'] < "15.7.3"
+      - ansible_facts['distribution_version'] >= "15.0.0"
