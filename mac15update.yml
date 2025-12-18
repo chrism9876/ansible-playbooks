@@ -1,5 +1,5 @@
 - name: Update to MacOs sequilla 15.7.3
-  hosts: mac15
+  hosts: all
   vars_prompt:
     - name: password
       prompt: What is the password?
@@ -27,6 +27,8 @@
 #    async: 60000
 #    poll: 0
     become: yes
+
     when: 
       - ansible_facts['distribution_version'] < "15.7.3"
       - ansible_facts['distribution_version'] >= "15.0.0"
+
