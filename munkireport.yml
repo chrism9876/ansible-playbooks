@@ -1,0 +1,17 @@
+- name: Run munkireport
+  hosts: all
+#  vars_prompt:
+#    - name: password
+#      prompt: What is the password?
+ # vars:
+ #   version: 2023.2.20f1
+
+
+  tasks:
+
+  - name: Run munkireport
+    ansible.builtin.shell:
+      cmd: touch /Users/Shared/.com.github.munkireport.run
+    become: yes
+  
+
