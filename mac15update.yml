@@ -1,5 +1,6 @@
 - name: Update to MacOs sequilla 15.7.4
   hosts: all
+  strategy: free
   vars_prompt:
     - name: password
       prompt: What is the password?
