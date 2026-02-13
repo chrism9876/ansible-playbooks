@@ -9,10 +9,22 @@
 
   tasks:
 
-#  - name: Download update
-#    ansible.builtin.shell:
-#      cmd: /usr/sbin/softwareupdate -d "macOS Sequoia 15.3.1-24D70"
-
+  - name: Download update
+    ansible.builtin.shell: |      
+      log_file /tmp/uplog.log;
+      set timeout 99999999
+      spawn /usr/sbin/softwareupdate -d "macOS Sequoia 15.7.4-24G517"
+      expect "Password:"
+      send -- "{{ password }}\r"
+      expect eof
+    args:
+      executable: /usr/bin/expect
+    #async: 60000
+    #poll: 0
+    become: yes
+    when: 
+      - ansible_facts['distribution_version'] < "15.7.4"
+      - ansible_facts['distribution_version'] >= "15.0.0"
 
   - name: Install update
     ansible.builtin.shell: |      
@@ -24,8 +36,8 @@
       expect eof
     args:
       executable: /usr/bin/expect
-#    async: 60000
-#    poll: 0
+    async: 60000
+    poll: 0
     become: yes
 
     when: 
