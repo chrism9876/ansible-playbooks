@@ -21,8 +21,8 @@
       expect eof
     args:
       executable: /usr/bin/expect
-    async: 60000
-    poll: 0
+    #async: 60000
+    #poll: 0
     become: yes
     when: ansible_facts['distribution_version'] < "15.7.4"
 
