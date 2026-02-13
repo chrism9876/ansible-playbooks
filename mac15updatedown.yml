@@ -1,32 +1,28 @@
-- name: Update to MacOs sequilla 15.7.3
+- name: Update to MacOs sequilla 15.7.4
   hosts: all
-#  vars_prompt:
-#    - name: password
-#      prompt: What is the password?
+  vars_prompt:
+    - name: password
+      prompt: What is the password?
  # vars:
  #   version: 2023.2.20f1
 
 
   tasks:
 
-  - name: Download update
-    ansible.builtin.shell:
-      cmd: /usr/sbin/softwareupdate -d "macOS Sequoia 15.7.3-24G419"
-    become: yes
-    when: ansible_facts['distribution_version'] < "15.7.3"
 
-#  - name: Install update
-#    ansible.builtin.shell: |      
-#      log_file /tmp/uplog.log;
-#      set timeout 99999999
-#      spawn /usr/sbin/softwareupdate -i "macOS Sequoia 15.7.3-24G419" -R --force
-#      expect "Password:"
-#      send -- "{{ password }}\r"
-#      expect eof
-#    args:
-#      executable: /usr/bin/expect
-#    async: 60000
-#    poll: 0
-#    become: yes
-#    when: ansible_facts['distribution_version'] < "15.7.3"
+
+  - name: Download update
+    ansible.builtin.shell: |      
+      log_file /tmp/uplog.log;
+      set timeout 99999999
+      spawn /usr/sbin/softwareupdate -d "macOS Sequoia 15.7.4-24G517"
+      expect "Password:"
+      send -- "{{ password }}\r"
+      expect eof
+    args:
+      executable: /usr/bin/expect
+    async: 60000
+    poll: 0
+    become: yes
+    when: ansible_facts['distribution_version'] < "15.7.4"
 
