@@ -1,5 +1,6 @@
 - name: Install MacOs sequilla 15.4
   hosts: temp
+  strategy: free
   vars_prompt:
     - name: password
       prompt: What is the password?
