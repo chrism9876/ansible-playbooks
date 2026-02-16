@@ -1,0 +1,34 @@
+- name: Install MacOs Tahoe 26.3
+  hosts: temp
+  strategy: free
+  vars_prompt:
+    - name: password
+      prompt: What is the password?
+ # vars:
+ #   version: 2023.2.20f1
+
+
+  tasks:
+
+  - name: Copy MacOs Tahoe 26.3 Full Installer
+    ansible.builtin.copy:
+      src: ~/InstallAssistant26.3.pkg 
+      dest: /tmp/InstallAssistant26.3.pkg
+    when:
+    - ansible_facts['distribution_major_version'] < "15"
+
+  - name: Install installer
+    ansible.builtin.shell:
+      cmd: installer -pkg /tmp/InstallAssistant26.3.pkg -target /
+    when:
+    - ansible_facts['distribution_major_version'] < "15"
+
+  - name: Upgrade
+    ansible.builtin.shell:      
+      cmd: Echo "{{ password }}" | /Applications/Install\ macOS\ Tahoe.app/Contents/Resources/startosinstall --agreetolicense --forcequitapps --user admin --stdinpass
+    async: 60000
+    poll: 0
+    become: yes
+    when:
+    - ansible_facts['distribution_major_version'] < "15"
+
