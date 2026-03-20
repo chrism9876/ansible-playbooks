@@ -12,6 +12,7 @@
       executable: /bin/bash
     #async: 60000
     #poll: 0
+    throttle: 20
     become: yes
 
   - name: Install update
