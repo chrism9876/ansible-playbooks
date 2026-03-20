@@ -1,0 +1,24 @@
+- name: Update Adobe using RUM
+  hosts: all
+  strategy: free
+
+
+  tasks:
+
+  - name: Download updates
+    ansible.builtin.shell: |      
+      /usr/local/bin/RemoteUpdateManager --action=download
+    args:
+      executable: /bin/bash
+    #async: 60000
+    #poll: 0
+    become: yes
+
+  - name: Install update
+    ansible.builtin.shell: |      
+      /usr/local/bin/RemoteUpdateManager --action=install
+    args:
+      executable: /bin/bash
+    async: 60000
+    poll: 0
+    become: yes
