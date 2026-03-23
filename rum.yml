@@ -14,6 +14,8 @@
     #poll: 0
     throttle: 20
     become: yes
+    register: diff_cmd
+    failed_when: diff_cmd.rc == 1 or diff_cmd.rc >= 3
 
   - name: Install update
     ansible.builtin.shell: |      
