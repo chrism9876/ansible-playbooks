@@ -6,8 +6,37 @@
 
 
   tasks:
+  - name: Check Office
+    ansible.builtin.shell:
+      cmd: |
+        wordVersion=$(plutil -p /Applications/Microsoft\ Word.app/Contents/Info.plist | awk '/CFBundleShortVersionString/ {print substr($3, 2, length($3)-2)}')
 
-  - name: Copy MacOs Sequilla 15.4 Full Installer
+        regex="^16.[0-9]+$"
+        if [[ $wordVersion =~ $regex ]]; then
+        echo "Word major version matches format"
+        wordMinorVersion=$(echo $wordVersion|awk -F. '{print $2}')
+        if [[ $wordMinorVersion -lt 104 ]]; then
+        echo "Old version dectected: $wordVersion"
+        
+        exit 0
+        else
+        echo "Newer version detected not uninstalling"
+        exit 1
+        fi
+        else
+        echo "Word major version does not match format"
+    
+        exit 0
+        fi
+    become: yes
+    args:
+      executable: /bin/bash
+    when:
+    - ansible_facts['distribution_major_version'] > "13"
+
+
+  
+  - name: Copy office installer
     ansible.builtin.copy:
       src: ~/{{ pkgname }}
       dest: /tmp/{{ pkgname }}
