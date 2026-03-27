@@ -1,0 +1,22 @@
+- name: Install Offcie 2024
+  hosts: temp
+  strategy: free
+  vars:
+    pkgname: Microsoft_365_and_Office_16.107.26032211_BusinessPro_Installer.pkg
+
+
+  tasks:
+
+  - name: Copy MacOs Sequilla 15.4 Full Installer
+    ansible.builtin.copy:
+      src: ~/{{ pkgname }}
+      dest: /tmp/{{ pkgname }}
+    when:
+    - ansible_facts['distribution_major_version'] > "13"
+
+  - name: Install Office
+    ansible.builtin.shell:
+      cmd: installer -pkg /tmp/{{ pkgname }} -target /
+    become: yes
+    when:
+    - ansible_facts['distribution_major_version'] > "13"
