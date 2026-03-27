@@ -9,9 +9,9 @@
   - name: Check Office
     ansible.builtin.shell:
       cmd: |
-        wordVersion=$(plutil -p /Applications/Microsoft\ Word.app/Contents/Info.plist | awk '/CFBundleShortVersionString/ {print substr($3, 2, length($3)-2)}'||  grep -oE '16.[0-9]+')
+        wordVersion=$(plutil -p /Applications/Microsoft\ Word.app/Contents/Info.plist | awk '/CFBundleShortVersionString/ {print substr($3, 2, length($3)-2)}'||  grep -oE '16\.[0-9]+')
 
-        regex="^16.[0-9]+$"
+        regex="^16\.[0-9]+$"
         if [[ $wordVersion =~ $regex ]]; then
         echo "Word major version matches format"
         wordMinorVersion=$(echo $wordVersion|awk -F. '{print $2}')
